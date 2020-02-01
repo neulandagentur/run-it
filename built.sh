@@ -1,1 +1,1 @@
-pyinstaller --name="RunIt" --windowed --onefile run.py
+pyinstaller --name="RunIt" --windowed --onefile --icon="assets/app.ico" run.py

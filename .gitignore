@@ -1,3 +1,7 @@
 /venv/
 *.pyc
 /target/
+/build/
+/dist/
+RunIt.spec
+.DS_Store
