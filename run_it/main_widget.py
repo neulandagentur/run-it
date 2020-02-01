@@ -32,6 +32,22 @@ class MainWidget(QtWidgets.QWidget):
 
         self.list_widget.itemDoubleClicked.connect(self.run_it)
 
+        try:
+            with open('commands.txt') as file:
+                for line in file.readlines():
+                    list_item = QtWidgets.QListWidgetItem(line.replace('\n', ''))
+                    self.list_widget.addItem(list_item)
+        except Exception as e:
+            print(e)
+            pass
+
+    def writeFile(self):
+        with open('commands.txt', 'w') as file:
+            for i in range(self.list_widget.count()):
+                try:
+                    file.write('{}\n'.format(self.list_widget.item(i).text()))
+                except Exception as e:
+                    print(e)
 
     def run_it(self, item):
         os.system(item.text())
@@ -46,6 +62,7 @@ class MainWidget(QtWidgets.QWidget):
         if item and accept:
             list_item = QtWidgets.QListWidgetItem(item)
             self.list_widget.addItem(list_item)
+            self.writeFile()
 
     def delete_item(self):
         dialog = Confirm('Wirklich löschen?')
@@ -58,3 +75,4 @@ class MainWidget(QtWidgets.QWidget):
         if dialog.exec_():
             row = self.list_widget.row(current_item)
             self.list_widget.takeItem(row)
+            self.writeFile()
